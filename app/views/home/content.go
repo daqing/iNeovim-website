@@ -5,6 +5,7 @@ const (
 	Chinese = "zh-CN"
 
 	repositoryURL = "https://github.com/daqing/iNeovim"
+	downloadURL   = "https://github.com/daqing/iNeovim-website/releases/tag/v0.5.0"
 )
 
 type featureContent struct {
@@ -53,7 +54,7 @@ func contentFor(language string) pageContent {
 			HeroKicker:          "macOS 原生开源 Neovim 客户端",
 			HeroTitle:           "Neovim，融入 macOS。",
 			HeroDescription:     "一款简洁、快速的 Mac 原生 Neovim 客户端，保留你熟悉的编辑体验，自然融入日常工作流。",
-			PrimaryAction:       "在 GitHub 上查看",
+			PrimaryAction:       "下载 v0.5.0",
 			SecondaryAction:     "了解功能",
 			ScreenshotAlt:       "iNeovim 在 macOS 上展示 Go 代码、LSP 诊断弹窗、Problems 侧栏和独立终端面板。",
 			ScreenshotCaption:   "代码、终端与诊断，在同一个原生窗口中清晰呈现。",
@@ -102,7 +103,7 @@ func contentFor(language string) pageContent {
 		HeroKicker:          "Open-source Neovim client for macOS",
 		HeroTitle:           "Neovim, at home on macOS.",
 		HeroDescription:     "A native Mac client that stays out of your way. Fast, focused, and built around the way you already use Neovim.",
-		PrimaryAction:       "View on GitHub",
+		PrimaryAction:       "Download v0.5.0",
 		SecondaryAction:     "Explore features",
 		ScreenshotAlt:       "iNeovim on macOS showing Go code, an LSP diagnostic popover, the Problems sidebar, and a terminal panel.",
 		ScreenshotCaption:   "Native editing, terminal, and diagnostics in one window.",
