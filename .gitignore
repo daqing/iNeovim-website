@@ -19,3 +19,5 @@
 *.sock
 
 schema.json
+
+/scripts
