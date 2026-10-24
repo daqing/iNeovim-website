@@ -1,0 +1,47 @@
+package layouts
+
+import (
+	"github.com/daqing/airway/app/assets"
+	"github.com/daqing/airway/lib/utils"
+)
+
+// Base renders the shared HTML document shell. Page templates wrap their
+// content in this component, e.g.:
+//
+//	@layouts.Base("My Title", "en") {
+//		<p>Page body…</p>
+//	}
+templ Base(title string, language string, description ...string) {
+	<!DOCTYPE html>
+	<html lang={ language }>
+		<head>
+			<meta charset="utf-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232d6a45'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial,sans-serif' font-size='42' font-weight='700' fill='white'%3Ei%3C/text%3E%3C/svg%3E"/>
+			<title>{ title }</title>
+			if len(description) > 0 {
+				<meta name="description" content={ description[0] }/>
+				<meta property="og:title" content={ title }/>
+				<meta property="og:description" content={ description[0] }/>
+				<meta property="og:type" content="website"/>
+				<meta name="theme-color" content="#fbfcfa"/>
+			}
+			<style>
+			  body {
+          position: relative;
+          font-family: "Inter", sans-serif;
+          padding: 0;
+          margin: 0
+        }
+			</style>
+			@assets.Stylesheet()
+			if utils.AppConfig().IsLocal {
+				<script src={ templ.URL(utils.URLPrefix() + "/assets/livereload.js") } data-ws={ utils.URLPrefix() + "/ws" } defer></script>
+			}
+			@assets.Scripts()
+		</head>
+		<body>
+			{ children... }
+		</body>
+	</html>
+}

@@ -1,0 +1,180 @@
+package home
+
+import (
+	"github.com/daqing/iNeovim-website/app/views/layouts"
+	"github.com/daqing/airway/lib/utils"
+)
+
+templ Index(language string) {
+	@page(contentFor(language))
+}
+
+templ page(page pageContent) {
+	@layouts.Base(page.Title, page.Language, page.Description) {
+		<div class="site-page">
+			<style>
+				.site-page {
+					--page-bg: #fbfcfa;
+					--surface: #ffffff;
+					--ink: #20251f;
+					--muted: #5b655b;
+					--line: #dce2da;
+					--green: #2d6a45;
+					--green-dark: #215234;
+					--green-soft: #eff5f0;
+					min-height: 100vh;
+					background: var(--page-bg);
+					color: var(--ink);
+					font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+					-webkit-font-smoothing: antialiased;
+				}
+				.site-page *, .site-page *::before, .site-page *::after { box-sizing: border-box; }
+				.site-page a { color: inherit; }
+				.site-page a:focus-visible { outline: 3px solid rgba(45, 106, 69, .28); outline-offset: 4px; border-radius: 3px; }
+				.site-page .container { width: min(1080px, calc(100% - 48px)); margin-inline: auto; }
+				.site-page .site-header { background: var(--surface); border-bottom: 1px solid var(--line); }
+				.site-page .header-inner { min-height: 66px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+				.site-page .brand { color: var(--ink); font-size: 22px; font-weight: 720; letter-spacing: -.6px; text-decoration: none; }
+				.site-page .brand-initial { color: var(--green); }
+				.site-page .site-nav { display: flex; align-items: center; gap: 26px; font-size: 14px; }
+				.site-page .site-nav a { color: var(--muted); text-decoration: none; }
+				.site-page .site-nav a:hover { color: var(--green); }
+				.site-page .language-link { border-left: 1px solid var(--line); padding-left: 24px; color: var(--ink) !important; }
+				.site-page .hero-copy { max-width: 900px; padding: 54px 0 32px; text-align: center; }
+				.site-page .eyebrow { margin: 0 0 14px; color: var(--green); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; font-weight: 650; letter-spacing: .11em; text-transform: uppercase; }
+				.site-page h1 { margin: 0; font-size: clamp(40px, 4.6vw, 60px); font-weight: 700; letter-spacing: -.045em; line-height: 1.12; }
+				.site-page .hero-description { max-width: 660px; margin: 20px auto 0; color: var(--muted); font-size: 18px; line-height: 1.65; }
+				.site-page .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+				.site-page .button { min-height: 43px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 18px; border: 1px solid transparent; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none; }
+				.site-page .button-primary { background: var(--green); border-color: var(--green); color: #fff; }
+				.site-page .button-primary:hover { background: var(--green-dark); border-color: var(--green-dark); }
+				.site-page .button-secondary { background: var(--surface); border-color: var(--line); color: var(--ink); }
+				.site-page .button-secondary:hover { background: var(--green-soft); border-color: #bdcdbf; }
+				.site-page .button svg { width: 16px; height: 16px; }
+				.site-page .screenshot { margin: 0 auto; }
+				.site-page .screenshot img { display: block; width: 100%; height: auto; background: #1f211f; border: 1px solid #cbd2c8; border-radius: 8px; }
+				.site-page .screenshot figcaption { margin-top: 12px; color: var(--muted); font-size: 13px; text-align: center; }
+				.site-page .hero { padding-bottom: 68px; }
+				.site-page .features { padding: 70px 0 78px; background: var(--surface); border-top: 1px solid var(--line); scroll-margin-top: 24px; }
+				.site-page .section-heading { max-width: 680px; }
+				.site-page h2 { margin: 0; font-size: 32px; font-weight: 680; letter-spacing: -.025em; line-height: 1.25; }
+				.site-page .section-description { margin: 14px 0 0; color: var(--muted); font-size: 16px; line-height: 1.7; }
+				.site-page .feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 38px 56px; margin-top: 42px; }
+				.site-page .feature { padding-top: 20px; border-top: 1px solid var(--line); }
+				.site-page .feature-number { color: var(--green); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+				.site-page .feature-title-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 12px 0 9px; }
+				.site-page .feature h3 { margin: 0; font-size: 20px; font-weight: 650; letter-spacing: -.015em; }
+				.site-page .feature p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.72; }
+				.site-page kbd { flex-shrink: 0; padding: 4px 7px; background: var(--page-bg); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; font-weight: 500; }
+				.site-page .open-source { padding: 64px 0; background: var(--green-soft); border-top: 1px solid var(--line); }
+				.site-page .open-source-inner { display: flex; align-items: center; justify-content: space-between; gap: 48px; }
+				.site-page .open-source-copy { max-width: 630px; }
+				.site-page .open-source h2 { font-size: 28px; }
+				.site-page .text-link { flex-shrink: 0; color: var(--green); font-size: 15px; font-weight: 650; text-decoration: none; }
+				.site-page .text-link:hover { color: var(--green-dark); text-decoration: underline; text-underline-offset: 4px; }
+				.site-page .site-footer { background: var(--surface); border-top: 1px solid var(--line); }
+				.site-page .footer-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 24px; color: var(--muted); font-size: 13px; }
+				.site-page .footer-links { display: flex; gap: 22px; }
+				.site-page .footer-links a { text-decoration: none; }
+				.site-page .footer-links a:hover { color: var(--green); }
+				@media (max-width: 720px) {
+					.site-page .container { width: min(1080px, calc(100% - 32px)); }
+					.site-page .site-nav { gap: 17px; }
+					.site-page .language-link { padding-left: 17px; }
+					.site-page .hero-copy { padding-top: 44px; }
+					.site-page .hero-description { font-size: 16px; }
+					.site-page .feature-grid { gap: 30px; }
+					.site-page .open-source-inner { align-items: flex-start; flex-direction: column; gap: 24px; }
+				}
+				@media (max-width: 560px) {
+					.site-page .header-inner { min-height: 60px; }
+					.site-page .nav-features { display: none; }
+					.site-page .hero-copy { padding: 38px 0 28px; }
+					.site-page h1 { font-size: clamp(35px, 10vw, 46px); letter-spacing: -.04em; }
+					.site-page .hero-actions { align-items: stretch; flex-direction: column; margin-top: 24px; }
+					.site-page .button { width: 100%; }
+					.site-page .hero { padding-bottom: 48px; }
+					.site-page .screenshot figcaption { font-size: 12px; line-height: 1.6; }
+					.site-page .features { padding: 50px 0 56px; }
+					.site-page h2 { font-size: 28px; }
+					.site-page .feature-grid { grid-template-columns: 1fr; gap: 28px; margin-top: 34px; }
+					.site-page .feature-title-row { align-items: flex-start; }
+					.site-page .open-source { padding: 48px 0; }
+					.site-page .footer-inner { align-items: flex-start; flex-direction: column; gap: 14px; padding: 24px 0; }
+				}
+			</style>
+			<header class="site-header">
+				<div class="container header-inner">
+					<a class="brand" href={ templ.URL(utils.URLPrefix() + homePath(page.Language)) } aria-label={ page.HomeLabel }><span class="brand-initial">i</span>Neovim</a>
+					<nav class="site-nav" aria-label={ page.NavigationLabel }>
+						<a class="nav-features" href="#features">{ page.NavFeatures }</a>
+						<a href={ templ.URL(repositoryURL) }>GitHub</a>
+						<a class="language-link" href={ templ.URL(utils.URLPrefix() + homePath(alternateLanguage(page.Language))) } hreflang={ alternateLanguage(page.Language) }>{ page.LanguageAction }</a>
+					</nav>
+				</div>
+			</header>
+			<main>
+				<section class="hero">
+					<div class="container hero-copy">
+						<p class="eyebrow">{ page.HeroKicker }</p>
+						<h1>{ page.HeroTitle }</h1>
+						<p class="hero-description">{ page.HeroDescription }</p>
+						<div class="hero-actions">
+							<a class="button button-primary" href={ templ.URL(repositoryURL) }>
+								{ page.PrimaryAction }
+								<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+							</a>
+							<a class="button button-secondary" href="#features">{ page.SecondaryAction }</a>
+						</div>
+					</div>
+					<figure class="container screenshot">
+						<img src={ templ.URL(utils.URLPrefix() + "/static/iNeovim-screenshot.png") } alt={ page.ScreenshotAlt } width="2602" height="1290" fetchpriority="high"/>
+						<figcaption>{ page.ScreenshotCaption }</figcaption>
+					</figure>
+				</section>
+				<section class="features" id="features">
+					<div class="container">
+						<div class="section-heading">
+							<p class="eyebrow">{ page.FeaturesKicker }</p>
+							<h2>{ page.FeaturesTitle }</h2>
+							<p class="section-description">{ page.FeaturesDescription }</p>
+						</div>
+						<div class="feature-grid">
+							for _, feature := range page.Features {
+								<article class="feature">
+									<span class="feature-number">{ feature.Number }</span>
+									<div class="feature-title-row">
+										<h3>{ feature.Title }</h3>
+										if feature.Shortcut != "" {
+											<kbd>{ feature.Shortcut }</kbd>
+										}
+									</div>
+									<p>{ feature.Description }</p>
+								</article>
+							}
+						</div>
+					</div>
+				</section>
+				<section class="open-source" id="open-source">
+					<div class="container open-source-inner">
+						<div class="open-source-copy">
+							<p class="eyebrow">{ page.OpenSourceKicker }</p>
+							<h2>{ page.OpenSourceTitle }</h2>
+							<p class="section-description">{ page.OpenSourceDescription }</p>
+						</div>
+						<a class="text-link" href={ templ.URL(repositoryURL) }>{ page.OpenSourceAction } <span aria-hidden="true">↗</span></a>
+					</div>
+				</section>
+			</main>
+			<footer class="site-footer">
+				<div class="container footer-inner">
+					<span>{ page.FooterTagline }</span>
+					<div class="footer-links">
+						<a href={ templ.URL(repositoryURL) }>GitHub</a>
+						<a href="https://neovim.io/">Neovim</a>
+					</div>
+				</div>
+			</footer>
+		</div>
+	}
+}
